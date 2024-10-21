@@ -1,8 +1,9 @@
+using Identity.Database;
+using Identity.Extensions;
+using Identity.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using ProfileApi.Database;
-using ProfileApi.Extensions;
-using ProfileApi.Models;
+using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,7 +15,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddAuthorization();
-builder.Services.AddAuthentication().AddCookie(IdentityConstants.ApplicationScheme);
+builder.Services.AddAuthentication()
+  .AddCookie(IdentityConstants.ApplicationScheme);
 
 
 builder.Services.AddIdentityCore<User>()
@@ -38,6 +40,21 @@ if (app.Environment.IsDevelopment())
 
   app.ApplyMigrations();
 }
+
+
+//-------------------------------------------------------------------
+
+app.MapGet("users/me", async (ClaimsPrincipal claims, ApplicationDbContext context) =>
+{
+
+  string userId = claims.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
+  var user = await context.Users.FindAsync(userId);
+  return Results.Ok(user);
+
+}).RequireAuthorization();
+
+//-------------------------------------------------------------------
+
 
 app.UseHttpsRedirection();
 

@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Identity.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using ProfileApi.Models;
 
-namespace ProfileApi.Database
+namespace Identity.Database
 {
   public class ApplicationDbContext : IdentityDbContext<User>
   {

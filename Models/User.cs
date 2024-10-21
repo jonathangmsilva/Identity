@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace ProfileApi.Models
+namespace Identity.Models
 {
   public class User : IdentityUser
   {

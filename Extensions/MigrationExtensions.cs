@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using ProfileApi.Database;
+﻿using Identity.Database;
+using Microsoft.EntityFrameworkCore;
 
-namespace ProfileApi.Extensions
+namespace Identity.Extensions
 {
   public static class MigrationExtensions
   {
